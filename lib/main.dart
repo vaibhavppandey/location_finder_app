@@ -12,7 +12,11 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => PresentIP()),
         ProxyProvider<PresentIP, CurrentLocation>(
-            update: (_, presentIP, __) => CurrentLocation(ip: presentIP.ip))
+            update: (_, presentIP, oldCurrentLocation) {
+          CurrentLocation currentLocation = CurrentLocation(
+              ip: presentIP.ip, providedLocation: oldCurrentLocation?.location);
+          return currentLocation;
+        })
       ],
       child: const NameToBeDecidedApp(),
     ),

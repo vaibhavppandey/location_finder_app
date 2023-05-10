@@ -14,11 +14,6 @@ class CurrentLocationFutureBuilder extends StatefulWidget {
 class _CurrentLocationFutureBuilderState
     extends State<CurrentLocationFutureBuilder> {
   @override
-  void didUpdateWidget(CurrentLocationFutureBuilder oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<CurrentLocation>(context).location,
