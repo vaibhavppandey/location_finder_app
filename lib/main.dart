@@ -7,12 +7,13 @@ import 'package:provider/provider.dart';
 import 'package:http_sth/src/app.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PresentIP()),
         ProxyProvider<PresentIP, CurrentLocation>(
-            update: (_, presentIP, __) => CurrentLocation(ip: presentIP.ip))
+            update: (_, presentIP, __) => CurrentLocation(ip: presentIP.ip)),
       ],
       child: const NameToBeDecidedApp(),
     ),

@@ -29,7 +29,8 @@ class _CurrentLocationFutureBuilderState
                 style: Theme.of(context).textTheme.headlineMedium,
               )
             : snapshot.hasError
-                ? Text("SomeError ${snapshot.error}",
+                ? Text(
+                    "${snapshot.error}: \nStackTrace: ${snapshot.stackTrace}",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
