@@ -8,8 +8,8 @@ part of 'current_location.dart';
 
 CurrentLocation _$CurrentLocationFromJson(Map<String, dynamic> json) =>
     CurrentLocation(
-      json['ip'] as String,
-      json['location'] as String,
+      json['query'] as String,
+      json['country'] as String,
       json['regionName'] as String,
       json['isp'] as String,
       json['proxy'] as bool? ?? false,
@@ -17,9 +17,9 @@ CurrentLocation _$CurrentLocationFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CurrentLocationToJson(CurrentLocation instance) =>
     <String, dynamic>{
-      'ip': instance.ip,
-      'location': instance.location,
+      'country': instance.location,
       'regionName': instance.regionName,
       'isp': instance.isp,
       'proxy': instance.proxy,
+      'query': instance.ip,
     };

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http_sth/src/model/current_location_model.dart'
-    show CurrentLocation;
+import 'package:http_sth/src/repository/current_location_repository.dart';
 import 'package:provider/provider.dart';
 
 class CurrentLocationFutureBuilder extends StatefulWidget {
@@ -20,21 +19,31 @@ class _CurrentLocationFutureBuilderState
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Provider.of<CurrentLocation>(context).location,
-        initialData: null,
-        builder: (context, snapshot) => snapshot.hasData
-            ? Text(
-                snapshot.data!,
-                style: Theme.of(context).textTheme.headlineMedium,
-              )
-            : snapshot.hasError
-                ? Text(
-                    "${snapshot.error}: \nStackTrace: ${snapshot.stackTrace}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Theme.of(context).colorScheme.error))
-                : const CircularProgressIndicator());
+    return ValueListenableBuilder(
+        valueListenable:
+            Provider.of<LocationRepository>(context).connectionState,
+        builder: (context, connectionState, child) {
+          return connectionState == ConnectionState.waiting
+              ? const CircularProgressIndicator()
+              : FutureBuilder(
+                  future:
+                      Provider.of<LocationRepository>(context).currentLocation,
+                  initialData: null,
+                  builder: (context, snapshot) => snapshot.hasData
+                      ? Text(
+                          snapshot.data!.location,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        )
+                      : snapshot.hasError
+                          ? Text(
+                              "${snapshot.error}: \nStackTrace: ${snapshot.stackTrace}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.error))
+                          : const CircularProgressIndicator());
+        });
   }
 }

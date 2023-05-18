@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http_sth/src/model/user_ip_model.dart';
+import 'package:http_sth/src/repository/current_location_repository.dart';
 import 'package:provider/provider.dart';
 
 class CurrentLocationPageFab extends StatefulWidget {
@@ -12,14 +12,15 @@ class CurrentLocationPageFab extends StatefulWidget {
 class _CurrentLocationPageFabState extends State<CurrentLocationPageFab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<PresentIP>(
-      builder: (context, presentIP, _) => ValueListenableBuilder(
-          valueListenable: presentIP.connectionState,
+    return Consumer<LocationRepository>(
+      builder: (context, repository, _) => ValueListenableBuilder(
+          valueListenable: repository.connectionState,
           builder: (_, connectionState, __) {
             return FloatingActionButton.extended(
               onPressed: connectionState == ConnectionState.waiting
                   ? null
-                  : presentIP.getIP /* context.read<PresentIP>().getIP */,
+                  : repository
+                      .recheckLocation /* context.read<PresentIP>().getIP */,
               label: Text(connectionState.toString()),
               icon: connectionState == ConnectionState.waiting
                   ? const SizedBox.square(
